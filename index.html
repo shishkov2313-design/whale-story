@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b5678"><title>Интересные факты о китах</title>
+<style>
+*{box-sizing:border-box}body{margin:0;padding:24px 14px 40px;background:linear-gradient(#dff5fb,#f8fdff);font-family:system-ui,sans-serif;color:#16364a}
+main{max-width:740px;margin:auto}.card{background:white;border-radius:26px;overflow:hidden;box-shadow:0 15px 45px #083b5920}
+header{text-align:center;padding:30px 20px;color:white;background:linear-gradient(135deg,#36a9c8,#0b5678)}
+.whale{font-size:72px}h1{font-size:clamp(28px,5vw,40px);margin:8px 0}.sub{margin:0}
+.content{padding:22px clamp(18px,5vw,40px) 30px}.intro{font-size:19px;line-height:1.6}
+.fact{padding:15px 0;border-top:1px solid #e3eff3}.fact h2{font-size:19px;color:#0b5678;margin:0 0 6px}.fact p{font-size:16px;line-height:1.65;margin:0}
+.controls{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:26px 0 12px}
+button{border:0;border-radius:30px;padding:14px 22px;font:bold 16px system-ui;cursor:pointer}
+#play{background:#0b5678;color:white}#stop{background:#e8f3f7;color:#083b59}
+#status{text-align:center;min-height:24px;color:#557184;font-size:14px}footer{text-align:center;color:#668394;padding:0 16px 24px;font-size:13px}
+</style></head>
+<body><main><article class="card">
+<header><div class="whale">🐋</div><h1>Интересные факты о китах</h1><p class="sub">Узнаём больше об удивительных морских животных!</p></header>
+<section class="content">
+<p class="intro">Кит — это большое морское животное.</p>
+<section class="fact"><h2>🐬 Не рыба</h2><p>Хотя кит похож на огромную рыбу, он ею не является. Кит — это млекопитающее, как кошка или собака.</p></section>
+<section class="fact"><h2>💨 Дышит воздухом</h2><p>У кита нет жабр, поэтому он не может дышать под водой. Ему нужно время от времени всплывать на поверхность, чтобы сделать вдох через специальное отверстие на голове — дыхало. Когда кит выдыхает воздух, получается тот самый «фонтан», который часто показывают в мультфильмах.</p></section>
+<section class="fact"><h2>🍼 Кормит детёнышей молоком</h2><p>Китята рождаются живыми, и мама кормит их молоком, совсем как кошка кормит котят.</p></section>
+<section class="fact"><h2>🌊 Очень большой</h2><p>Самый крупный — синий кит. Он может быть длиннее школьного автобуса.</p></section>
+<section class="fact"><h2>🐟 Есть разные виды</h2><p>Некоторые киты едят планктон (крошечных рачков), процеживая воду через специальные пластины во рту — их называют китовым усом. А другие киты, например дельфины или косатки, имеют зубы и охотятся на рыбу.</p></section>
+<section class="fact"><h2>🎵 Общается звуками</h2><p>Киты могут издавать протяжные и мелодичные звуки, которые иногда называют «песнями».</p></section>
+<div class="controls"><button id="play">🔊 Послушать</button><button id="stop">⏹ Остановить</button></div>
+<div id="status" role="status" aria-live="polite">Нажми «Послушать», чтобы услышать рассказ.</div>
+</section><footer>Можно читать или слушать рассказ несколько раз.</footer>
+</article></main>
+<script>
+const story=`Кит — это большое морское животное. Что важно знать. Не рыба. Хотя кит похож на огромную рыбу, он ею не является. Кит — это млекопитающее, как кошка или собака. Дышит воздухом. У кита нет жабр, поэтому он не может дышать под водой. Ему нужно время от времени всплывать на поверхность, чтобы сделать вдох через специальное отверстие на голове — дыхало. Когда кит выдыхает воздух, получается тот самый «фонтан», который часто показывают в мультфильмах. Кормит детёнышей молоком. Китята рождаются живыми, и мама кормит их молоком, совсем как кошка кормит котят. Очень большой. Самый крупный — синий кит. Он может быть длиннее школьного автобуса. Есть разные виды. Некоторые киты едят планктон (крошечных рачков), процеживая воду через специальные пластины во рту — их называют китовым усом. А другие киты, например дельфины или косатки, имеют зубы и охотятся на рыбу. Общается звуками. Киты могут издавать протяжные и мелодичные звуки, которые иногда называют «песнями».`;
+const status=document.getElementById('status');
+document.getElementById('play').onclick=()=>{if(!('speechSynthesis'in window)){status.textContent='Браузер не поддерживает озвучивание. Попробуй Chrome или Safari.';return;}
+speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(story);u.lang='ru-RU';u.rate=.9;
+const voices=speechSynthesis.getVoices();u.voice=voices.find(v=>v.lang.toLowerCase()==='ru-ru')||voices.find(v=>v.lang.toLowerCase().startsWith('ru'))||null;
+u.onstart=()=>status.textContent='Сейчас звучит рассказ о китах…';u.onend=()=>status.textContent='Рассказ окончен. Можно послушать ещё раз!';u.onerror=()=>status.textContent='Не удалось включить озвучивание. Проверь звук телефона.';speechSynthesis.speak(u);};
+document.getElementById('stop').onclick=()=>{if('speechSynthesis'in window)speechSynthesis.cancel();status.textContent='Озвучивание остановлено.';};
+</script></body></html>
