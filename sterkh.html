@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2878d0"><meta name="description" content="Детская виртуальная энциклопедия о природе, истории и достопримечательностях Сахалина.">
+<title>Белый журавль — стерх — Удивительный Сахалин</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="wrap top"><a class="brand" href="index.html"><span class="brand-mark">🌊</span><span>Удивительный Сахалин</span></a><a class="navlink" href="index.html">⌂ На главную</a></div></header>
+<main class="wrap">
+<a class="back" href="index.html">← Все истории</a>
+<section class="article-hero"><div class="article-banner"><div class="article-copy"><div class="num">ИСТОРИЯ 04 · УДИВИТЕЛЬНЫЙ САХАЛИН</div><h1>Белый журавль — стерх</h1><p>Стерх — удивительный белый журавль. Это редкая птица, которую люди стараются сохранить.</p></div><div class="art bird">🕊️</div></div></section>
+<div class="content"><article class="story"><section><h2>Как выглядит стерх?</h2><p>У стерха белое оперение, длинные ноги и длинный клюв. На лице заметна красная кожа без перьев, а концы крыльев у взрослых птиц чёрные.</p></section><section><h2>Где живёт?</h2><p>Стерхи гнездятся в труднодоступных местах на севере — среди болот и тундры. Там, где мало людей, птицам спокойнее выводить птенцов.</p></section><section><h2>Как растут птенцы?</h2><p>Самка обычно откладывает два яйца. Часто выживает только один птенец. Поэтому особенно важно не беспокоить птиц возле гнезда.</p></section><section><h2>Удивительный танец</h2><p>Во время ухаживания журавли танцуют: подпрыгивают, расправляют крылья и подбрасывают веточки. Обычно пары сохраняются надолго.</p></section><section><h2>Куда улетают стерхи?</h2><p>На зиму птицы отправляются в тёплые края. Восточная популяция зимует в Китае, а западная исторически мигрировала в Индию и Иран.</p></section><section><h2>Почему их нужно беречь?</h2><p>Стерх занесён в Красную книгу. Это значит, что вид нуждается в особой охране. Нельзя подходить к гнёздам и пугать этих редких птиц.</p></section><section><h2>Запомни!</h2><p>Стерхи могут устраивать настоящие танцы — подпрыгивать, хлопать крыльями и подбрасывать веточки!</p></section></article>
+<aside class="side">
+<button class="listen" id="listen" type="button"><strong><span class="listen-icon" id="listenIcon">▶</span><span id="listenLabel">Послушать рассказ</span></strong><small>Русская озвучка · можно остановить в любой момент</small></button>
+<div class="side-card"><h3>💡 Интересный факт</h3><p>Стерхи могут устраивать настоящие танцы — подпрыгивать, хлопать крыльями и подбрасывать веточки!</p></div>
+<div class="side-card resources"><h3>Узнать больше</h3><p>Дополнительная информация:</p><a href="https://www.yaklass.ru/" target="_blank" rel="noopener">Материалы о редких птицах ↗</a></div>
+<div class="toast" id="status" aria-live="polite"></div>
+</aside></div>
+</main>
+<script>
+const parts=["Белый журавль — стерх. Стерх — удивительный белый журавль. Это редкая птица, которую люди стараются сохранить.", "Как выглядит стерх?. У стерха белое оперение, длинные ноги и длинный клюв. На лице заметна красная кожа без перьев, а концы крыльев у взрослых птиц чёрные.", "Где живёт?. Стерхи гнездятся в труднодоступных местах на севере — среди болот и тундры. Там, где мало людей, птицам спокойнее выводить птенцов.", "Как растут птенцы?. Самка обычно откладывает два яйца. Часто выживает только один птенец. Поэтому особенно важно не беспокоить птиц возле гнезда.", "Удивительный танец. Во время ухаживания журавли танцуют: подпрыгивают, расправляют крылья и подбрасывают веточки. Обычно пары сохраняются надолго.", "Куда улетают стерхи?. На зиму птицы отправляются в тёплые края. Восточная популяция зимует в Китае, а западная исторически мигрировала в Индию и Иран.", "Почему их нужно беречь?. Стерх занесён в Красную книгу. Это значит, что вид нуждается в особой охране. Нельзя подходить к гнёздам и пугать этих редких птиц.", "Интересный факт. Стерхи могут устраивать настоящие танцы — подпрыгивать, хлопать крыльями и подбрасывать веточки!"];
+const btn=document.getElementById('listen'), label=document.getElementById('listenLabel'), icon=document.getElementById('listenIcon'), status=document.getElementById('status');
+let playing=false;
+function stopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();playing=false;label.textContent='Послушать рассказ';icon.textContent='▶';}
+btn.addEventListener('click',()=>{
+ if(!('speechSynthesis' in window)){status.textContent='К сожалению, этот браузер не поддерживает озвучивание. Попробуйте открыть сайт в Chrome или Safari.';return;}
+ if(playing){stopSpeech();status.textContent='Воспроизведение остановлено.';return;}
+ window.speechSynthesis.cancel();
+ const text=parts.join('\n\n');
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang='ru-RU';utterance.rate=0.88;utterance.pitch=1;
+ const voices=window.speechSynthesis.getVoices();
+ const russian=voices.find(v=>v.lang.toLowerCase().startsWith('ru'));
+ if(russian)utterance.voice=russian;
+ utterance.onstart=()=>{playing=true;label.textContent='Остановить рассказ';icon.textContent='Ⅱ';status.textContent='Рассказ звучит…';};
+ utterance.onend=()=>{stopSpeech();status.textContent='Рассказ завершён.';};
+ utterance.onerror=()=>{stopSpeech();status.textContent='Не удалось запустить озвучивание. Попробуйте ещё раз.';};
+ window.speechSynthesis.speak(utterance);
+});
+window.addEventListener('pagehide',()=>window.speechSynthesis?.cancel());
+</script>
+<footer><div class="wrap foot"><span>© ДОУ №10 «Росинка» · Удивительный Сахалин</span><span>Узнаём родной остров вместе!</span></div></footer></body></html>

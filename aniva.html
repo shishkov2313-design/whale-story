@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2878d0"><meta name="description" content="Детская виртуальная энциклопедия о природе, истории и достопримечательностях Сахалина.">
+<title>Маяк Анива — Удивительный Сахалин</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="wrap top"><a class="brand" href="index.html"><span class="brand-mark">🌊</span><span>Удивительный Сахалин</span></a><a class="navlink" href="index.html">⌂ На главную</a></div></header>
+<main class="wrap">
+<a class="back" href="index.html">← Все истории</a>
+<section class="article-hero"><div class="article-banner"><div class="article-copy"><div class="num">ИСТОРИЯ 02 · УДИВИТЕЛЬНЫЙ САХАЛИН</div><h1>Маяк Анива</h1><p>На скале посреди моря стоит необычный маяк, который много лет помогал кораблям находить безопасный путь.</p></div><div class="art aniva">🗼</div></div></section>
+<div class="content"><article class="story"><section><h2>Где находится маяк?</h2><p>Маяк Анива расположен на юге Сахалина, на небольшой скале Сивучья рядом с мысом Анива. Вокруг него — море, скалы и часто густые туманы.</p></section><section><h2>Кто и когда его построил?</h2><p>Маяк построили японские инженеры в 1939 году. Сначала он назывался «Нака-Сиретоко мисаки». Башня круглая, бетонная, высотой около 31 метра, внутри девять этажей.</p></section><section><h2>Зачем он нужен?</h2><p>В этих местах кораблям угрожали подводные камни и скалы. Свет маяка предупреждал моряков об опасности и помогал держать правильный курс.</p></section><section><h2>Как работал маяк?</h2><p>Внутри находился механизм с тяжёлой гирей, который приводил в движение световой аппарат. Гирю приходилось регулярно заводить. Свет был виден на большом расстоянии.</p></section><section><h2>Что с ним сейчас?</h2><p>С 2006 года маяк не используется для навигации. Он стал одним из самых узнаваемых символов Сахалина. Добраться к нему можно только по морю, в составе организованной экскурсии и при подходящей погоде.</p></section><section><h2>Запомни!</h2><p>Маяк стоит прямо на скале посреди моря — к нему нельзя просто подъехать на машине!</p></section></article>
+<aside class="side">
+<button class="listen" id="listen" type="button"><strong><span class="listen-icon" id="listenIcon">▶</span><span id="listenLabel">Послушать рассказ</span></strong><small>Русская озвучка · можно остановить в любой момент</small></button>
+<div class="side-card"><h3>💡 Интересный факт</h3><p>Маяк стоит прямо на скале посреди моря — к нему нельзя просто подъехать на машине!</p></div>
+<div class="side-card resources"><h3>Узнать больше</h3><p>Дополнительная информация:</p><a href="https://cultsakhalin.ru/" target="_blank" rel="noopener">Материалы о достопримечательностях Сахалина ↗</a></div>
+<div class="toast" id="status" aria-live="polite"></div>
+</aside></div>
+</main>
+<script>
+const parts=["Маяк Анива. На скале посреди моря стоит необычный маяк, который много лет помогал кораблям находить безопасный путь.", "Где находится маяк?. Маяк Анива расположен на юге Сахалина, на небольшой скале Сивучья рядом с мысом Анива. Вокруг него — море, скалы и часто густые туманы.", "Кто и когда его построил?. Маяк построили японские инженеры в 1939 году. Сначала он назывался «Нака-Сиретоко мисаки». Башня круглая, бетонная, высотой около 31 метра, внутри девять этажей.", "Зачем он нужен?. В этих местах кораблям угрожали подводные камни и скалы. Свет маяка предупреждал моряков об опасности и помогал держать правильный курс.", "Как работал маяк?. Внутри находился механизм с тяжёлой гирей, который приводил в движение световой аппарат. Гирю приходилось регулярно заводить. Свет был виден на большом расстоянии.", "Что с ним сейчас?. С 2006 года маяк не используется для навигации. Он стал одним из самых узнаваемых символов Сахалина. Добраться к нему можно только по морю, в составе организованной экскурсии и при подходящей погоде.", "Интересный факт. Маяк стоит прямо на скале посреди моря — к нему нельзя просто подъехать на машине!"];
+const btn=document.getElementById('listen'), label=document.getElementById('listenLabel'), icon=document.getElementById('listenIcon'), status=document.getElementById('status');
+let playing=false;
+function stopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();playing=false;label.textContent='Послушать рассказ';icon.textContent='▶';}
+btn.addEventListener('click',()=>{
+ if(!('speechSynthesis' in window)){status.textContent='К сожалению, этот браузер не поддерживает озвучивание. Попробуйте открыть сайт в Chrome или Safari.';return;}
+ if(playing){stopSpeech();status.textContent='Воспроизведение остановлено.';return;}
+ window.speechSynthesis.cancel();
+ const text=parts.join('\n\n');
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang='ru-RU';utterance.rate=0.88;utterance.pitch=1;
+ const voices=window.speechSynthesis.getVoices();
+ const russian=voices.find(v=>v.lang.toLowerCase().startsWith('ru'));
+ if(russian)utterance.voice=russian;
+ utterance.onstart=()=>{playing=true;label.textContent='Остановить рассказ';icon.textContent='Ⅱ';status.textContent='Рассказ звучит…';};
+ utterance.onend=()=>{stopSpeech();status.textContent='Рассказ завершён.';};
+ utterance.onerror=()=>{stopSpeech();status.textContent='Не удалось запустить озвучивание. Попробуйте ещё раз.';};
+ window.speechSynthesis.speak(utterance);
+});
+window.addEventListener('pagehide',()=>window.speechSynthesis?.cancel());
+</script>
+<footer><div class="wrap foot"><span>© ДОУ №10 «Росинка» · Удивительный Сахалин</span><span>Узнаём родной остров вместе!</span></div></footer></body></html>

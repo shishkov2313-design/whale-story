@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2878d0"><meta name="description" content="Детская виртуальная энциклопедия о природе, истории и достопримечательностях Сахалина.">
+<title>Багульник — Удивительный Сахалин</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="wrap top"><a class="brand" href="index.html"><span class="brand-mark">🌊</span><span>Удивительный Сахалин</span></a><a class="navlink" href="index.html">⌂ На главную</a></div></header>
+<main class="wrap">
+<a class="back" href="index.html">← Все истории</a>
+<section class="article-hero"><div class="article-banner"><div class="article-copy"><div class="num">ИСТОРИЯ 03 · УДИВИТЕЛЬНЫЙ САХАЛИН</div><h1>Багульник</h1><p>Весной на Сахалине можно увидеть нежные цветы багульника. Но любоваться ими лучше на расстоянии.</p></div><div class="art plant">🌸</div></div></section>
+<div class="content"><article class="story"><section><h2>Как выглядит?</h2><p>Багульник — невысокий кустарник. У него узкие тёмно-зелёные листья, а весной появляются небольшие белые или розоватые цветки, собранные в соцветия.</p></section><section><h2>Где растёт?</h2><p>Он любит влажные места: моховые болота, заболоченные хвойные леса и берега ручьёв. Иногда кустарники разрастаются так густо, что образуют целые заросли.</p></section><section><h2>Почему у него особенный запах?</h2><p>У багульника сильный, резкий аромат. В зарослях не стоит долго находиться: запах может вызвать неприятные ощущения.</p></section><section><h2>Важно помнить!</h2><p>Багульник может быть ядовитым. Не срывайте его, не пробуйте на вкус и не трогайте незнакомые растения. Если увидели красивый кустик, лучше просто полюбоваться им вместе со взрослым.</p></section><section><h2>Запомни!</h2><p>Даже очень красивое растение может быть опасным. В природе важно смотреть, но не трогать незнакомые растения!</p></section></article>
+<aside class="side">
+<button class="listen" id="listen" type="button"><strong><span class="listen-icon" id="listenIcon">▶</span><span id="listenLabel">Послушать рассказ</span></strong><small>Русская озвучка · можно остановить в любой момент</small></button>
+<div class="side-card"><h3>💡 Интересный факт</h3><p>Даже очень красивое растение может быть опасным. В природе важно смотреть, но не трогать незнакомые растения!</p></div>
+<div class="side-card resources"><h3>Узнать больше</h3><p>Дополнительная информация:</p><a href="https://altzapovednik.ru/" target="_blank" rel="noopener">Материалы о растениях ↗</a></div>
+<div class="toast" id="status" aria-live="polite"></div>
+</aside></div>
+</main>
+<script>
+const parts=["Багульник. Весной на Сахалине можно увидеть нежные цветы багульника. Но любоваться ими лучше на расстоянии.", "Как выглядит?. Багульник — невысокий кустарник. У него узкие тёмно-зелёные листья, а весной появляются небольшие белые или розоватые цветки, собранные в соцветия.", "Где растёт?. Он любит влажные места: моховые болота, заболоченные хвойные леса и берега ручьёв. Иногда кустарники разрастаются так густо, что образуют целые заросли.", "Почему у него особенный запах?. У багульника сильный, резкий аромат. В зарослях не стоит долго находиться: запах может вызвать неприятные ощущения.", "Важно помнить!. Багульник может быть ядовитым. Не срывайте его, не пробуйте на вкус и не трогайте незнакомые растения. Если увидели красивый кустик, лучше просто полюбоваться им вместе со взрослым.", "Интересный факт. Даже очень красивое растение может быть опасным. В природе важно смотреть, но не трогать незнакомые растения!"];
+const btn=document.getElementById('listen'), label=document.getElementById('listenLabel'), icon=document.getElementById('listenIcon'), status=document.getElementById('status');
+let playing=false;
+function stopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();playing=false;label.textContent='Послушать рассказ';icon.textContent='▶';}
+btn.addEventListener('click',()=>{
+ if(!('speechSynthesis' in window)){status.textContent='К сожалению, этот браузер не поддерживает озвучивание. Попробуйте открыть сайт в Chrome или Safari.';return;}
+ if(playing){stopSpeech();status.textContent='Воспроизведение остановлено.';return;}
+ window.speechSynthesis.cancel();
+ const text=parts.join('\n\n');
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang='ru-RU';utterance.rate=0.88;utterance.pitch=1;
+ const voices=window.speechSynthesis.getVoices();
+ const russian=voices.find(v=>v.lang.toLowerCase().startsWith('ru'));
+ if(russian)utterance.voice=russian;
+ utterance.onstart=()=>{playing=true;label.textContent='Остановить рассказ';icon.textContent='Ⅱ';status.textContent='Рассказ звучит…';};
+ utterance.onend=()=>{stopSpeech();status.textContent='Рассказ завершён.';};
+ utterance.onerror=()=>{stopSpeech();status.textContent='Не удалось запустить озвучивание. Попробуйте ещё раз.';};
+ window.speechSynthesis.speak(utterance);
+});
+window.addEventListener('pagehide',()=>window.speechSynthesis?.cancel());
+</script>
+<footer><div class="wrap foot"><span>© ДОУ №10 «Росинка» · Удивительный Сахалин</span><span>Узнаём родной остров вместе!</span></div></footer></body></html>

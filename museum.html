@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2878d0"><meta name="description" content="Детская виртуальная энциклопедия о природе, истории и достопримечательностях Сахалина.">
+<title>Сахалинский областной краеведческий музей — Удивительный Сахалин</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="wrap top"><a class="brand" href="index.html"><span class="brand-mark">🌊</span><span>Удивительный Сахалин</span></a><a class="navlink" href="index.html">⌂ На главную</a></div></header>
+<main class="wrap">
+<a class="back" href="index.html">← Все истории</a>
+<section class="article-hero"><div class="article-banner"><div class="article-copy"><div class="num">ИСТОРИЯ 01 · УДИВИТЕЛЬНЫЙ САХАЛИН</div><h1>Сахалинский областной краеведческий музей</h1><p>Здесь оживают истории Сахалина: от древних времён до наших дней.</p></div><div class="art museum">🏛️</div></div></section>
+<div class="content"><article class="story"><section><h2>Что это за место?</h2><p>Сахалинский областной краеведческий музей — место, где можно познакомиться с историей, природой и культурой нашего острова. В залах собраны старинные предметы, карты, чучела животных и национальные костюмы.</p></section><section><h2>Необычное здание</h2><p>Здание музея построили в 1937 году, когда южная часть Сахалина находилась под управлением Японии. Оно выполнено в традиционном японском архитектурном стиле «тэйкан», который также называют «стилем императорской короны». После Второй мировой войны здесь открылся краеведческий музей.</p></section><section><h2>Что можно увидеть?</h2><p>В музейной коллекции — более 250 тысяч предметов. Экспозиции рассказывают о природе, истории и культуре Сахалина и Курильских островов. Особенно интересно рассматривать животных, растения, старинные вещи и предметы быта коренных народов, в том числе айнов.</p></section><section><h2>Где находится?</h2><p>Музей расположен в Южно-Сахалинске по адресу: Коммунистический проспект, 29. Перед посещением можно посмотреть информацию об экскурсиях и занятиях на официальном сайте музея.</p></section><section><h2>Запомни!</h2><p>В музее хранится больше четверти миллиона предметов — целый мир открытий под одной крышей!</p></section></article>
+<aside class="side">
+<button class="listen" id="listen" type="button"><strong><span class="listen-icon" id="listenIcon">▶</span><span id="listenLabel">Послушать рассказ</span></strong><small>Русская озвучка · можно остановить в любой момент</small></button>
+<div class="side-card"><h3>💡 Интересный факт</h3><p>В музее хранится больше четверти миллиона предметов — целый мир открытий под одной крышей!</p></div>
+<div class="side-card resources"><h3>Узнать больше</h3><p>Дополнительная информация:</p><a href="https://sakhalinmuseum.ru/" target="_blank" rel="noopener">Официальный сайт музея ↗</a></div>
+<div class="toast" id="status" aria-live="polite"></div>
+</aside></div>
+</main>
+<script>
+const parts=["Сахалинский областной краеведческий музей. Здесь оживают истории Сахалина: от древних времён до наших дней.", "Что это за место?. Сахалинский областной краеведческий музей — место, где можно познакомиться с историей, природой и культурой нашего острова. В залах собраны старинные предметы, карты, чучела животных и национальные костюмы.", "Необычное здание. Здание музея построили в 1937 году, когда южная часть Сахалина находилась под управлением Японии. Оно выполнено в традиционном японском архитектурном стиле «тэйкан», который также называют «стилем императорской короны». После Второй мировой войны здесь открылся краеведческий музей.", "Что можно увидеть?. В музейной коллекции — более 250 тысяч предметов. Экспозиции рассказывают о природе, истории и культуре Сахалина и Курильских островов. Особенно интересно рассматривать животных, растения, старинные вещи и предметы быта коренных народов, в том числе айнов.", "Где находится?. Музей расположен в Южно-Сахалинске по адресу: Коммунистический проспект, 29. Перед посещением можно посмотреть информацию об экскурсиях и занятиях на официальном сайте музея.", "Интересный факт. В музее хранится больше четверти миллиона предметов — целый мир открытий под одной крышей!"];
+const btn=document.getElementById('listen'), label=document.getElementById('listenLabel'), icon=document.getElementById('listenIcon'), status=document.getElementById('status');
+let playing=false;
+function stopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();playing=false;label.textContent='Послушать рассказ';icon.textContent='▶';}
+btn.addEventListener('click',()=>{
+ if(!('speechSynthesis' in window)){status.textContent='К сожалению, этот браузер не поддерживает озвучивание. Попробуйте открыть сайт в Chrome или Safari.';return;}
+ if(playing){stopSpeech();status.textContent='Воспроизведение остановлено.';return;}
+ window.speechSynthesis.cancel();
+ const text=parts.join('\n\n');
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang='ru-RU';utterance.rate=0.88;utterance.pitch=1;
+ const voices=window.speechSynthesis.getVoices();
+ const russian=voices.find(v=>v.lang.toLowerCase().startsWith('ru'));
+ if(russian)utterance.voice=russian;
+ utterance.onstart=()=>{playing=true;label.textContent='Остановить рассказ';icon.textContent='Ⅱ';status.textContent='Рассказ звучит…';};
+ utterance.onend=()=>{stopSpeech();status.textContent='Рассказ завершён.';};
+ utterance.onerror=()=>{stopSpeech();status.textContent='Не удалось запустить озвучивание. Попробуйте ещё раз.';};
+ window.speechSynthesis.speak(utterance);
+});
+window.addEventListener('pagehide',()=>window.speechSynthesis?.cancel());
+</script>
+<footer><div class="wrap foot"><span>© ДОУ №10 «Росинка» · Удивительный Сахалин</span><span>Узнаём родной остров вместе!</span></div></footer></body></html>

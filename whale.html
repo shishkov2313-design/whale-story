@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#2878d0"><meta name="description" content="Детская виртуальная энциклопедия о природе, истории и достопримечательностях Сахалина.">
+<title>Кит — Удивительный Сахалин</title><link rel="stylesheet" href="assets/style.css"></head><body><header><div class="wrap top"><a class="brand" href="index.html"><span class="brand-mark">🌊</span><span>Удивительный Сахалин</span></a><a class="navlink" href="index.html">⌂ На главную</a></div></header>
+<main class="wrap">
+<a class="back" href="index.html">← Все истории</a>
+<section class="article-hero"><div class="article-banner"><div class="article-copy"><div class="num">ИСТОРИЯ 06 · УДИВИТЕЛЬНЫЙ САХАЛИН</div><h1>Кит</h1><p>Киты живут в океане, но дышат не жабрами, а лёгкими — совсем как люди.</p></div><div class="art whale">🐋</div></div></section>
+<div class="content"><article class="story"><section><h2>Кит — не рыба!</h2><p>Кит — морское млекопитающее. Он рождает живых детёнышей и выкармливает их молоком. Поэтому, несмотря на жизнь в воде, кит совсем не рыба.</p></section><section><h2>Как он дышит?</h2><p>Кит дышит воздухом с помощью лёгких. Ему нужно всплывать на поверхность и делать вдох через дыхало — отверстие на верхней части головы. Выдох иногда выглядит как фонтанчик.</p></section><section><h2>Какие бывают киты?</h2><p>Киты бывают очень разными. Например, синий кит — самое крупное животное на Земле. Некоторые киты питаются крошечными морскими организмами, процеживая воду через китовый ус, а зубатые киты охотятся на рыбу и других животных.</p></section><section><h2>Как китёнок растёт?</h2><p>Маленький китёнок рождается в воде. Мама кормит его молоком и помогает ему научиться жить в океане.</p></section><section><h2>Как киты общаются?</h2><p>Киты издают разнообразные звуки. Некоторые из них похожи на протяжные песни, которые могут распространяться под водой на большие расстояния.</p></section><section><h2>Запомни!</h2><p>Синий кит может вырасти длиннее школьного автобуса и считается самым крупным животным на планете!</p></section></article>
+<aside class="side">
+<button class="listen" id="listen" type="button"><strong><span class="listen-icon" id="listenIcon">▶</span><span id="listenLabel">Послушать рассказ</span></strong><small>Русская озвучка · можно остановить в любой момент</small></button>
+<div class="side-card"><h3>💡 Интересный факт</h3><p>Синий кит может вырасти длиннее школьного автобуса и считается самым крупным животным на планете!</p></div>
+<div class="side-card resources"><h3>Узнать больше</h3><p>Дополнительная информация:</p><a href="https://detskiy.mail.ru/" target="_blank" rel="noopener">Познавательные материалы о китах ↗</a></div>
+<div class="toast" id="status" aria-live="polite"></div>
+</aside></div>
+</main>
+<script>
+const parts=["Кит. Киты живут в океане, но дышат не жабрами, а лёгкими — совсем как люди.", "Кит — не рыба!. Кит — морское млекопитающее. Он рождает живых детёнышей и выкармливает их молоком. Поэтому, несмотря на жизнь в воде, кит совсем не рыба.", "Как он дышит?. Кит дышит воздухом с помощью лёгких. Ему нужно всплывать на поверхность и делать вдох через дыхало — отверстие на верхней части головы. Выдох иногда выглядит как фонтанчик.", "Какие бывают киты?. Киты бывают очень разными. Например, синий кит — самое крупное животное на Земле. Некоторые киты питаются крошечными морскими организмами, процеживая воду через китовый ус, а зубатые киты охотятся на рыбу и других животных.", "Как китёнок растёт?. Маленький китёнок рождается в воде. Мама кормит его молоком и помогает ему научиться жить в океане.", "Как киты общаются?. Киты издают разнообразные звуки. Некоторые из них похожи на протяжные песни, которые могут распространяться под водой на большие расстояния.", "Интересный факт. Синий кит может вырасти длиннее школьного автобуса и считается самым крупным животным на планете!"];
+const btn=document.getElementById('listen'), label=document.getElementById('listenLabel'), icon=document.getElementById('listenIcon'), status=document.getElementById('status');
+let playing=false;
+function stopSpeech(){if('speechSynthesis' in window)window.speechSynthesis.cancel();playing=false;label.textContent='Послушать рассказ';icon.textContent='▶';}
+btn.addEventListener('click',()=>{
+ if(!('speechSynthesis' in window)){status.textContent='К сожалению, этот браузер не поддерживает озвучивание. Попробуйте открыть сайт в Chrome или Safari.';return;}
+ if(playing){stopSpeech();status.textContent='Воспроизведение остановлено.';return;}
+ window.speechSynthesis.cancel();
+ const text=parts.join('\n\n');
+ const utterance=new SpeechSynthesisUtterance(text);
+ utterance.lang='ru-RU';utterance.rate=0.88;utterance.pitch=1;
+ const voices=window.speechSynthesis.getVoices();
+ const russian=voices.find(v=>v.lang.toLowerCase().startsWith('ru'));
+ if(russian)utterance.voice=russian;
+ utterance.onstart=()=>{playing=true;label.textContent='Остановить рассказ';icon.textContent='Ⅱ';status.textContent='Рассказ звучит…';};
+ utterance.onend=()=>{stopSpeech();status.textContent='Рассказ завершён.';};
+ utterance.onerror=()=>{stopSpeech();status.textContent='Не удалось запустить озвучивание. Попробуйте ещё раз.';};
+ window.speechSynthesis.speak(utterance);
+});
+window.addEventListener('pagehide',()=>window.speechSynthesis?.cancel());
+</script>
+<footer><div class="wrap foot"><span>© ДОУ №10 «Росинка» · Удивительный Сахалин</span><span>Узнаём родной остров вместе!</span></div></footer></body></html>
